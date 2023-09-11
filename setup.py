@@ -19,6 +19,6 @@ setup(name='django-auto-serializer',
     license='BSD',
     packages=['django_auto_serializer'],
     install_requires=[
-    'django>=2.0,<4.0',
+    'django>=2.0,<5.0',
     ],
 )
