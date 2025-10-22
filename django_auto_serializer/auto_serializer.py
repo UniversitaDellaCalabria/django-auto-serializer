@@ -268,10 +268,8 @@ class ImportableSerializedInstance(BaseSerializableInstance):
                 m2m_app_name = m2m_child['app_name']
                 m2m_model_name = m2m_child['model_name']
                 m2m_model_obj = self.app_model(m2m_app_name, m2m_model_name)
-                # print(m2m_model_obj, )
                 m2m_child_obj = m2m_model_obj.objects.get(**m2m_child['object'])
                 getattr(obj, m2m_key).add(m2m_child_obj)
-                print('saved m2m: {} {} ({})'.format(m2m_app_name, m2m_model_name,obj))
 
     def save_object(self,
                     obj_dict,
@@ -304,12 +302,8 @@ class ImportableSerializedInstance(BaseSerializableInstance):
             obj_dict['object'][obj_dict['related_field']] = parent_obj
 
         # save obj without optional m2m
-        print('saving:', obj_dict['object'])
         # detect and fetch fk
         save_dict=self.get_save_dict(model_obj, obj_dict)
-
-        print(save_dict)
-
         save_dict.update(custom_values)
 
         # save recursive custom values
@@ -332,9 +326,6 @@ class ImportableSerializedInstance(BaseSerializableInstance):
             # if k not in obj_dict['object']: continue
             setattr(obj, k, v)
             obj.save()
-
-        print('saved: {} {} ({})'.format(app_name, model_name, obj.__dict__))
-        print()
 
         # save each m2m
         self.save_m2m(obj, m2ms)
